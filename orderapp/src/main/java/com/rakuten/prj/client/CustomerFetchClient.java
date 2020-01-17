@@ -25,7 +25,7 @@ public class CustomerFetchClient {
 		OrderService os = ctx.getBean("orderService", OrderService.class);
 		List<Customer> customers = os.getCustomers();
 		for (Customer customer : customers) {
-			System.out.println(customers);
+			System.out.println("First name : " + customer.getFirstName() + " --- Email : " + customer.getEmail());
 		}
 	}
 

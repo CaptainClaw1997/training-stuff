@@ -7,61 +7,82 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="products")
+@Table(name = "products")
 public class Product implements Comparable<Product> {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-    private String name;
-    private double price;
-    private String category;
-    public Product() {
-    }
+	private String name; // maps to column of same name by default
+	private double price;
+	private String category;
+	private int qty;
+	
+	public Product() {
+	}
 
-    public Product(int id, String name, double price, String category) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.category = category;
-    }
+	public Product(int id, String name, double price, String category) {
+		this.id = id;
+		this.name = name;
+		this.price = price;
+		this.category = category;
+	}
 
-    public int getId() {
-        return id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-    public double getPrice() {
-        return price;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public void setPrice(double price) {
-        this.price = price;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String getCategory() {
-        return category;
-    }
-    public void setCategory(String category) {
-        this.category = category;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    @Override
-    public int compareTo(Product o) {
-        return this.id - o.id;
-    }
+	public double getPrice() {
+		return price;
+	}
 
-    @Override
-    public String toString() {
-        return "Product [id=" + id + ", name=" + name + ", price=" + price + ", category=" + category + "]";
-    }
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	/**
+	 * @return the qty
+	 */
+	public int getQty() {
+		return qty;
+	}
+
+	/**
+	 * @param qty the qty to set
+	 */
+	public void setQty(int qty) {
+		this.qty = qty;
+	}
+
+	@Override
+	public int compareTo(Product o) {
+		return this.id - o.id;
+	}
+
+	@Override
+	public String toString() {
+		return "Product [id=" + id + ", name=" + name + ", price=" + price + ", category=" + category + ", qty=" + qty
+				+ "]";
+	}
 
 	@Override
 	public int hashCode() {
@@ -102,7 +123,4 @@ public class Product implements Comparable<Product> {
 		return true;
 	}
 
-    
-    
-    
 }

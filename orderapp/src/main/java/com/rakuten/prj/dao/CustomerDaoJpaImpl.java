@@ -19,7 +19,6 @@ public class CustomerDaoJpaImpl implements CustomerDao {
 	@Override
 	public void addCustomer(Customer c) {
 		em.persist(c);
-
 	}
 
 	@Override

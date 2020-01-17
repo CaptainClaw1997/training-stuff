@@ -8,8 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.rakuten.prj.dao.CustomerDao;
+import com.rakuten.prj.dao.OrderDao;
 import com.rakuten.prj.dao.ProductDao;
 import com.rakuten.prj.entity.Customer;
+import com.rakuten.prj.entity.LineItem;
+import com.rakuten.prj.entity.Order;
 import com.rakuten.prj.entity.Product;
 
 @Service
@@ -20,6 +23,9 @@ public class OrderService {
 	
 	@Autowired
 	private CustomerDao customerDao;
+	
+	@Autowired
+	private OrderDao orderDao;
 		
 	public void insertProduct(Product p) {
 		productDao.addProduct(p);
@@ -44,4 +50,26 @@ public class OrderService {
 	public List<Customer> getCustomers(){
 		return customerDao.getCustomers();
 	}
+	
+	public void placeOrder(String email, int[] productIds, int[] qts) {
+		Order order = new Order(); // auto gets date
+		Customer c = customerDao.getCustomer(email);
+		order.setCustomer(c); // sets customer placing the order
+		double total = 0.0;
+		
+		for(int i = 0; i < productIds.length; i++) {
+			LineItem item = new LineItem();
+			Product p = productDao.getProduct(productIds[i]);
+			item.setProduct(p);
+			item.setQuantity(qts[i]);
+			item.setAmount(p.getPrice() * qts[i]);
+			order.getItems().add(item);
+			p.setQty(p.getQty() - qts[i]); // dirty checking
+			total+= item.getAmount();
+		}
+		
+		order.setTotal(total);
+		orderDao.placeOrder(order);
+	}
+	
 }
